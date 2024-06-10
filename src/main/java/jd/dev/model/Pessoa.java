@@ -17,7 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @SequenceGenerator(name = "seq_pessoa", sequenceName = "seq_pessoa",allocationSize = 1, initialValue = 1)
 public class Pessoa implements Serializable{
 
