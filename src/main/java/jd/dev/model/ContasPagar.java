@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,18 +34,25 @@ public class ContasPagar implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_contas_pagar")
 	private Long id;
 	
+	@Column(nullable = false)
 	private String descricao;
+	
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private StatusContaPagar status;
+	
+	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dtaVencimento;
+	
 	@Temporal(TemporalType.DATE)
 	private Date dtaPagamento;
+	
+	@Column(nullable = false)
 	private BigDecimal valorTotal;
+	
 	private BigDecimal valorDesconto;
-	
-	
-	
+		
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
 	private Pessoa pessoa;
@@ -52,6 +60,8 @@ public class ContasPagar implements Serializable {
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "pessoa_forn_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_forn_fk"))
 	private Pessoa pessoa_fornecedor;
+	
+	//automaticos
 
 	public Long getId() {
 		return id;

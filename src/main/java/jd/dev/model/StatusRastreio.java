@@ -25,10 +25,12 @@ public class StatusRastreio implements Serializable{
 	private Long id;
 	
 	private String centroDistribuicao;
-	private String cidade;
-	private String estado;
-	private String status;
 	
+	private String cidade;
+	
+	private String estado;
+	
+	private String status;
 	
 	@ManyToOne
 	@JoinColumn(name = "venda_compra_loja_id", nullable = false, foreignKey = @ForeignKey (value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_fk"))

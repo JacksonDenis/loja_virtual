@@ -12,18 +12,17 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "forma_pagamento")
-@SequenceGenerator(name = "seq_forma_pagamento", sequenceName = "seq_forma_pagamento", allocationSize = 1,initialValue = 1)
-public class FormaPagamento implements Serializable{
+@Table(name = "categoria_produto")
+@SequenceGenerator(name = "seq_categoria_produto", sequenceName = "seq_categoria_produto", allocationSize = 1, initialValue = 1)
+public class CategoriaProduto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_forma_pagamento")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_categoria_produto")
 	private Long id;
 	
-	@Column(nullable = false)
-	private String descricao;
+	@Column(name = "nome_desc", nullable = false)
+	private String nomeDesc;
 
 	public Long getId() {
 		return id;
@@ -33,12 +32,12 @@ public class FormaPagamento implements Serializable{
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getNomeDesc() {
+		return nomeDesc;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNomeDesc(String nomeDesc) {
+		this.nomeDesc = nomeDesc;
 	}
 
 	@Override
@@ -54,11 +53,11 @@ public class FormaPagamento implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FormaPagamento other = (FormaPagamento) obj;
+		CategoriaProduto other = (CategoriaProduto) obj;
 		return Objects.equals(id, other.id);
 	}
 	
 	
 	
-
+	
 }

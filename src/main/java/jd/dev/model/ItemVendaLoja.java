@@ -3,6 +3,7 @@ package jd.dev.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -24,6 +25,9 @@ public class ItemVendaLoja implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_item_venda_loja")
 	private Long id;
 	
+	@Column(nullable = false)
+	private Double quantidade;
+	
 	@ManyToOne
 	@JoinColumn(name = "produto_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "produto_fk"))
 	private Produto produto;
@@ -38,6 +42,14 @@ public class ItemVendaLoja implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Double getQuantidade() {
+		return quantidade;
+	}
+	
+	public void setQuantidade(Double quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public Produto getProduto() {

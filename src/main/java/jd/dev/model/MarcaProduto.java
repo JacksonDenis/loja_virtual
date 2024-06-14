@@ -1,7 +1,9 @@
 package jd.dev.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +21,8 @@ public class MarcaProduto implements Serializable {
 	@Id
 	@GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "seq_marca_produto")
 	private Long id;
+	
+	@Column(nullable = false)
 	private String nomeDesc;
 	
 	public Long getId() {
@@ -33,6 +37,23 @@ public class MarcaProduto implements Serializable {
 	public void setNomeDesc(String nomeDesc) {
 		this.nomeDesc = nomeDesc;
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MarcaProduto other = (MarcaProduto) obj;
+		return Objects.equals(id, other.id);
+	}
+	
+	
 	
 	
 
