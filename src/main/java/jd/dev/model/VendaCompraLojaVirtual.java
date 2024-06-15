@@ -131,6 +131,12 @@ public class VendaCompraLojaVirtual implements Serializable{
 	public void setDataEntrega(Date dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
+	public BigDecimal getValorDesconto() {
+		return valorDesconto;
+	}
+	public void setValorDesconto(BigDecimal valorDesconto) {
+		this.valorDesconto = valorDesconto;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -146,6 +152,7 @@ public class VendaCompraLojaVirtual implements Serializable{
 		VendaCompraLojaVirtual other = (VendaCompraLojaVirtual) obj;
 		return Objects.equals(id, other.id);
 	}
+
 	
 	
 	
