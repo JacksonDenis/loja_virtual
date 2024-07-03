@@ -5,3 +5,4 @@ SELECT CONSTRAINT_name from information_schema.constraint_column_usage
 	
 alter TABLE usuarios_acesso drop CONSTRAINT "uk8bak9jswon2id2jbunuqlfl9e"
 
+
