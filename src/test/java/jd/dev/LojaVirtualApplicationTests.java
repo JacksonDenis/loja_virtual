@@ -1,5 +1,6 @@
 package jd.dev;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class LojaVirtualApplicationTests extends TestCase {
 		
 		Acesso acesso = new Acesso();
 		
-		acesso.setDescricao("ROLE_TESTE_MOCKITO");
+		acesso.setDescricao("ROLE_TESTE_MOCKITO" + Calendar.getInstance().getTimeInMillis());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -160,13 +161,14 @@ class LojaVirtualApplicationTests extends TestCase {
 	
 	
 	@Test
-	public void testCadastraAcesso() {
+	public void testCadastraAcesso() throws ExceptionMentoriaJava {
 		Acesso acesso = new Acesso();
-		acesso.setDescricao("ADMIN-TESTE");
+		String desc = "ADMIN-TESTE" + Calendar.getInstance().getTimeInMillis();
+		acesso.setDescricao(desc);
 		assertEquals(true, acesso.getId() == null);
 		acesso = acessoController.salvarAcesso(acesso).getBody();
 		assertEquals(true, acesso.getId() > 0);
-		assertEquals("ADMIN-TESTE", acesso.getDescricao());
+		assertEquals(desc, acesso.getDescricao());
 
 		Acesso acesso2 = acessoRepository.findById(acesso.getId()).get();
 		assertEquals(acesso.getId(), acesso2.getId());

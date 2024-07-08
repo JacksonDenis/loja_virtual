@@ -57,8 +57,6 @@ public class AcessoController {
 		
 	}
 	
-	@CrossOrigin(origins = "https://www.jdtech.com.br")
-	@Secured ({"ROLE_GERENTE", "ROLE_ADMIN"})
 	@ResponseBody
 	@DeleteMapping(value = "**/deleteAcessoId/{id}")
 	public ResponseEntity<?> deleteAcessoId(@PathVariable("id") Long id) {

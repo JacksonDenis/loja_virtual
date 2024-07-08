@@ -35,6 +35,18 @@ public class ItemVendaLoja implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "vd_cp_loja_virtual_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "vd_cp_loja_virtual_fk"))
 	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
+	
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
+	private Pessoa empresa;
+	
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
+	
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
 
 	public Long getId() {
 		return id;
