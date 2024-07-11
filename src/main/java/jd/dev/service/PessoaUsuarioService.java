@@ -1,6 +1,10 @@
 package jd.dev.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+import java.util.Iterator;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,8 +24,15 @@ public class PessoaUsuarioService {
 	private PessoaRepository pessoaRepository;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private ServiceSendEmail serviceSendEmail;
 	
 	public PessoaJuridica salvarPessoaJuridica(PessoaJuridica pessoaJuridica) {
+		
+		for(int i = 0; i < pessoaJuridica.getEnderecos().size();i++) {
+			pessoaJuridica.getEnderecos().get(i).setPessoa(pessoaJuridica);
+			pessoaJuridica.getEnderecos().get(i).setEmpresa(pessoaJuridica);
+		}
 		
 		pessoaJuridica= pessoaRepository.save(pessoaJuridica);
 		
@@ -47,6 +58,24 @@ public class PessoaUsuarioService {
 			usuarioPj = usuarioRepository.save(usuarioPj);
 			
 			usuarioRepository.insereAcessoUsersPj(usuarioPj.getId());
+			usuarioRepository.insereAcessoUsersPj(usuarioPj.getId(),"ROLE_ADMIN");
+			
+			
+			StringBuilder messagenHtml = new StringBuilder();
+			
+			messagenHtml.append("<b>Segue abaixo seus dados de acesso para a loja virtual</b><br/>");
+			messagenHtml.append("<b>Login: </b>" + pessoaJuridica.getEmail() + "<br/>");
+			messagenHtml.append("<b>Senha: </b>").append(senha).append("<br/><br/>") ;
+			messagenHtml.append("<b>OBRIGADO </b>");
+			
+			
+			try {
+				serviceSendEmail.enviarEmailHmtl("Acesso Gerado para Loja Virtual", messagenHtml.toString() , pessoaJuridica.getEmail());
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 			
 		}
 		

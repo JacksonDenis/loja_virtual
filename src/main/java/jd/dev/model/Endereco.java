@@ -15,55 +15,60 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jd.dev.enums.TipoEndereco;
 
 @Entity
 @Table(name = "endereco")
 @SequenceGenerator(name = "seq_endereco", sequenceName = "seq_endereco", allocationSize = 1, initialValue = 1)
-public class Endereco implements Serializable{
+public class Endereco implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_endereco")
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String ruaLogra;
-	
+
 	@Column(nullable = false)
 	private String cep;
-	
+
 	@Column(nullable = false)
 	private String numero;
-	
+
 	private String complemento;
-	
+
 	@Column(nullable = false)
 	private String bairro;
-	
+
 	@Column(nullable = false)
 	private String uf;
-	
+
 	@Column(nullable = false)
 	private String cidade;
-	
+
+	@JsonIgnore
 	@ManyToOne(targetEntity = Pessoa.class)
-	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name  = "pessoa_fk"))
+	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
 	private Pessoa pessoa;
-	
+
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipoEndereco;
-	
+
+	@JsonIgnore
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
 	private Pessoa empresa;
-	
+
 	public void setEmpresa(Pessoa empresa) {
 		this.empresa = empresa;
 	}
-	
+
 	public Pessoa getEmpresa() {
 		return empresa;
 	}
@@ -139,11 +144,18 @@ public class Endereco implements Serializable{
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-
 	
+	public TipoEndereco getTipoEndereco() {
+		return tipoEndereco;
+	}
+
+	public void setTipoEndereco(TipoEndereco tipoEndereco) {
+		this.tipoEndereco = tipoEndereco;
+	}
+
 	@Override
 	public int hashCode() {
 		return super.hashCode();
 	}
-	
+
 }
