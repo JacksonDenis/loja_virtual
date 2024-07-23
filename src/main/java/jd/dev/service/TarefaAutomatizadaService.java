@@ -20,25 +20,25 @@ public class TarefaAutomatizadaService {
 	
 	private ServiceSendEmail sendEmail;
 	
-	@Scheduled(initialDelay = 2000, fixedDelay = 86400000 )
-	public void notificarUsuarioTrocaSenha() throws InterruptedException {
+	@Scheduled(cron = "0 0 11 * * *", zone = "America/Sao_Paulo") /*Vai rodar todo dia as 11 horas da manhã horario de Sao paulo*/
+	public void notificarUserTrocaSenha() throws UnsupportedEncodingException, MessagingException, InterruptedException {
+		
 		List<Usuario> usuarios = usuarioRepository.usuariosSenhaVencida();
+		
 		for (Usuario usuario : usuarios) {
+			
+			
 			StringBuilder msg = new StringBuilder();
 			msg.append("Olá, ").append(usuario.getPessoa().getNome()).append("<br/>");
-			msg.append("Está na hora de trocar de senha, já passou 90 dias de validade").append("<br/");
-			msg.append("Troque sua senha a JD loja virtual");
+			msg.append("Está na hora de trocar sua senha, já passou 90 dias de validade.").append("<br/>");
+			msg.append("Troque sua senha a loja virtual do Alex - JDEV treinamento");
 			
-			try {
-				sendEmail.enviarEmailHmtl("Troca de senha", msg.toString(), usuario.getLogin());
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			}
+			sendEmail.enviarEmailHmtl("Troca de senha", msg.toString(), usuario.getLogin());
 			
 			Thread.sleep(3000);
+			
 		}
+		
+		
 	}
-
 }

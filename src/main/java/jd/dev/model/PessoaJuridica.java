@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+
 @Entity
 @Table(name = "pessoa_juridica")
 public class PessoaJuridica extends Pessoa {
@@ -26,6 +28,7 @@ public class PessoaJuridica extends Pessoa {
 	
 	private String categoria;
 	
+	@CNPJ(message = "CNPJ Está invalido")
 	public String getCnpj() {
 		return cnpj;
 	}
