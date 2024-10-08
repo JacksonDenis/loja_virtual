@@ -1,31 +1,25 @@
 package jd.dev.controller;
 
-import java.util.Iterator;
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import jd.dev.ExceptionMentoriaJava;
 import jd.dev.model.Endereco;
 import jd.dev.model.PessoaFisica;
 import jd.dev.model.PessoaJuridica;
 import jd.dev.model.dto.CepDTO;
+import jd.dev.model.dto.ConsultaCnpjDto;
 import jd.dev.repository.EnderecoRepository;
 import jd.dev.repository.PessoaFisicaRepository;
 import jd.dev.repository.PessoaRepository;
 import jd.dev.service.PessoaUsuarioService;
+import jd.dev.service.ServiceContagemAcessoApi;
 import jd.dev.util.ValidaCNPJ;
 import jd.dev.util.ValidaCPF;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class PessoaController {
@@ -37,7 +31,10 @@ public class PessoaController {
 	private PessoaUsuarioService pessoaUsuarioService;
 	@Autowired
 	private EnderecoRepository enderecoRepository ;
-	
+	@Autowired
+	private ServiceContagemAcessoApi serviceContagemAcessoApi;
+
+
 	@ResponseBody
 	@GetMapping(value = "**/consultaPfNome/{nome}")
 	public ResponseEntity<List<PessoaFisica>> consultaPfNome(@PathVariable("nome") String nome) {
@@ -74,7 +71,17 @@ public class PessoaController {
 		CepDTO cepDTO = pessoaUsuarioService.consultaCep(cep);
 		return new ResponseEntity<CepDTO>(cepDTO, HttpStatus.OK);
 	}
-	
+
+	@ResponseBody
+	@GetMapping(value = "**/consultaCnpjReceitaWs/{cnpj}")
+	public ResponseEntity<ConsultaCnpjDto> consultaCnpjReceitaWs(@PathVariable("cnpj") String cnpj){
+
+		return new ResponseEntity<ConsultaCnpjDto>(PessoaUsuarioService.consultaCnpjReceitaWS(cnpj), HttpStatus.OK);
+
+	}
+
+
+
 	@SuppressWarnings("unused")
 	@ResponseBody
 	@PostMapping(value = "**/salvarPj")

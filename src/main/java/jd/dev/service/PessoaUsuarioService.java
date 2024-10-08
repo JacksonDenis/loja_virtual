@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import javax.mail.MessagingException;
 
+import jd.dev.model.dto.ConsultaCnpjDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -144,5 +145,11 @@ public class PessoaUsuarioService {
 	public CepDTO consultaCep(String cep) {
 		return new RestTemplate().getForEntity("https://viacep.com.br/ws/"+cep+"/json", CepDTO.class).getBody();
 	}
+
+
+	public static ConsultaCnpjDto consultaCnpjReceitaWS(String cnpj) {
+		return new RestTemplate().getForEntity("https://receitaws.com.br/v1/cnpj/" + cnpj, ConsultaCnpjDto.class).getBody();
+	}
+
 
 }
