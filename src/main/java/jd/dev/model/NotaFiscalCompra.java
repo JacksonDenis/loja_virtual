@@ -17,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "nota_fiscal_compra")
@@ -30,42 +31,47 @@ public class NotaFiscalCompra implements Serializable{
 	private Long id;
 	
 	@Column(nullable = false)
+	@NotNull(message = "numeroNota deve ser informado")
 	private String numeroNota;
 	
 	@Column(nullable = false)
+	@NotNull(message = "serieNota deve ser informado")
 	private String serieNota;
 	
 	private String descricaoObs;
 	
 	@Column(nullable = false)
+	@NotNull(message = "serieNota deve ser informado")
 	private BigDecimal valorTotal;
 	
 	private BigDecimal valorDesconto;
 	
 	@Column(nullable = false)
+	@NotNull(message = "serieNota deve ser informado")
 	private BigDecimal valorIcms;
 	
 	@Column(nullable = false)
+	@NotNull(message = "serieNota deve ser informado")
 	@Temporal(TemporalType.DATE)
 	private Date dataCompra;
 	
-	@ManyToOne (targetEntity = Pessoa.class)
+	@ManyToOne (targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk") )
-	private Pessoa pessoa;
+	private PessoaJuridica pessoa;
 	
 	@ManyToOne
 	@JoinColumn(name = "contas_pagar_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "contas_pagar_fk"))
 	private ContasPagar contasPagar;
 	
-	@ManyToOne(targetEntity = Pessoa.class)
+	@ManyToOne(targetEntity = PessoaJuridica.class)
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
-	private Pessoa empresa;
+	private PessoaJuridica empresa;
 	
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 	
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 
@@ -133,11 +139,11 @@ public class NotaFiscalCompra implements Serializable{
 		this.dataCompra = dataCompra;
 	}
 
-	public Pessoa getPessoa() {
+	public PessoaJuridica getPessoa() {
 		return pessoa;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(PessoaJuridica pessoa) {
 		this.pessoa = pessoa;
 	}
 
