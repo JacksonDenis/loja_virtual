@@ -20,6 +20,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
 import jd.dev.enums.StatusContaPagar;
 
 
@@ -27,52 +29,59 @@ import jd.dev.enums.StatusContaPagar;
 @Table(name = "contas_pagar")
 @SequenceGenerator(name = "seq_contas_pagar", sequenceName = "seq_contas_pagar", allocationSize = 1, initialValue = 1)
 public class ContasPagar implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_contas_pagar")
 	private Long id;
-	
+
 	@Column(nullable = false)
+	@NotNull(message = "descricao da conta deve ser informado")
 	private String descricao;
-	
+
 	@Column(nullable = false)
+	@NotNull(message = "status da conta deve ser informado")
 	@Enumerated(EnumType.STRING)
 	private StatusContaPagar status;
-	
+
 	@Column(nullable = false)
+	@NotNull(message = "dtaVencimento deve ser informado")
 	@Temporal(TemporalType.DATE)
 	private Date dtaVencimento;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date dtaPagamento;
-	
+
 	@Column(nullable = false)
+	@NotNull(message = "valorTotal deve ser informado")
 	private BigDecimal valorTotal;
-	
+
 	private BigDecimal valorDesconto;
-		
+
 	@ManyToOne(targetEntity = Pessoa.class)
+	@NotNull(message = "pessoa deve ser informado")
 	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
-	private Pessoa pessoa;
-	
+	private PessoaFisica pessoa;
+
 	@ManyToOne(targetEntity = Pessoa.class)
+	@NotNull(message = "pessoa_fornecedor deve ser informado")
 	@JoinColumn(name = "pessoa_forn_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_forn_fk"))
-	private Pessoa pessoa_fornecedor;
-	
+	private PessoaJuridica pessoa_fornecedor;
+
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
-	private Pessoa empresa;
-	
-	public void setEmpresa(Pessoa empresa) {
+	@NotNull(message = "empresa do produto deve ser informado")
+	private PessoaJuridica empresa;
+
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
-	
-	public Pessoa getEmpresa() {
+
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
-	
+
 
 	public Long getId() {
 		return id;
@@ -130,19 +139,19 @@ public class ContasPagar implements Serializable {
 		this.valorDesconto = valorDesconto;
 	}
 
-	public Pessoa getPessoa() {
+	public PessoaFisica getPessoa() {
 		return pessoa;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(PessoaFisica pessoa) {
 		this.pessoa = pessoa;
 	}
 
-	public Pessoa getPessoa_fornecedor() {
+	public PessoaJuridica getPessoa_fornecedor() {
 		return pessoa_fornecedor;
 	}
 
-	public void setPessoa_fornecedor(Pessoa pessoa_fornecedor) {
+	public void setPessoa_fornecedor(PessoaJuridica pessoa_fornecedor) {
 		this.pessoa_fornecedor = pessoa_fornecedor;
 	}
 
@@ -162,10 +171,6 @@ public class ContasPagar implements Serializable {
 		ContasPagar other = (ContasPagar) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 
-	
-	
 
 }
