@@ -46,8 +46,16 @@ public class StatusRastreio implements Serializable{
 	
 	public Pessoa getEmpresa() {
 		return empresa;
-	}	
-	
+	}
+
+	public VendaCompraLojaVirtual getVendaCompraLojaVirtual() {
+		return vendaCompraLojaVirtual;
+	}
+
+	public void setVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
+		this.vendaCompraLojaVirtual = vendaCompraLojaVirtual;
+	}
+
 	public Long getId() {
 		return id;
 	}
