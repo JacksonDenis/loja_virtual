@@ -22,6 +22,11 @@ public interface VendaCompraLojaVirtRepository extends JpaRepository<VendaCompra
             "WHERE i.vendaCompraLojaVirtual.excluido = false AND upper(trim(i.produto.nome)) like %?1%")
     List<VendaCompraLojaVirtual> vendaPorNomeProduto(String nomePessoa);
 
+    @Query(value="select distinct(i.vendaCompraLojaVirtual) from ItemVendaLoja i "
+            + " where i.vendaCompraLojaVirtual.excluido = false and i.vendaCompraLojaVirtual.pessoa.id = ?1")
+    List<VendaCompraLojaVirtual> vendaPorCliente(Long idCliente);
+
+
     @Query("SELECT i.vendaCompraLojaVirtual FROM ItemVendaLoja i " +
             "WHERE i.vendaCompraLojaVirtual.excluido = false AND upper(trim(i.vendaCompraLojaVirtual.pessoa.nome)) like %?1%")
     List<VendaCompraLojaVirtual> vendaPorNomeCliente(String nomePessoa);
@@ -31,14 +36,9 @@ public interface VendaCompraLojaVirtRepository extends JpaRepository<VendaCompra
             + " like %?1%")
     List<VendaCompraLojaVirtual> vendaPorEndereCobranca(String enderecocobranca);
 
-
-
     @Query(value="select distinct(i.vendaCompraLojaVirtual) from ItemVendaLoja i "
             + " where i.vendaCompraLojaVirtual.excluido = false and upper(trim(i.vendaCompraLojaVirtual.enderecoEntrega.ruaLogra)) "
             + " like %?1%")
     List<VendaCompraLojaVirtual> vendaPorEnderecoEntrega(String enderecoentrega);
-
-
-
 
 }

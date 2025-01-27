@@ -1,5 +1,7 @@
 package jd.dev.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -31,11 +33,12 @@ public class StatusRastreio implements Serializable{
 	private String estado;
 	
 	private String status;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "venda_compra_loja_id", nullable = false, foreignKey = @ForeignKey (value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_fk"))
 	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
-	
+	@JsonIgnore
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
 	private PessoaJuridica empresa;

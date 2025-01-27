@@ -107,6 +107,33 @@ public class VendaCompraLojaVirtController {
     }
 
     @ResponseBody
+    @GetMapping(value = "**/vendaPorCliente/{idCliente}")
+    public ResponseEntity<List<VendaCompraLojaDto>> vendaPorCliente(@PathVariable("idCliente") Long idCliente) throws ExceptionMentoriaJava {
+
+        List<VendaCompraLojaVirtual> vendaCompraLoja = vendaCompraLojaVirtRepository.vendaPorCliente(idCliente);
+
+        if (vendaCompraLoja == null) {
+            vendaCompraLoja = new ArrayList<VendaCompraLojaVirtual>();
+        }
+
+        return getListResponseEntity(vendaCompraLoja);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "**/consultaVendaDinamicaFaixaData/{data1}/{data2}")
+    public ResponseEntity<List<VendaCompraLojaDto>> obterVendaPorProduto(@PathVariable("data1") String data1, @PathVariable("data2") String data2) throws ExceptionMentoriaJava {
+
+        List<VendaCompraLojaVirtual> vendaCompraLoja = null;
+        vendaCompraLoja = vendaService.consultaVendaFaixaData(data1, data2);
+
+        if (vendaCompraLoja == null) {
+            vendaCompraLoja = new ArrayList<VendaCompraLojaVirtual>();
+        }
+
+        return getListResponseEntity(vendaCompraLoja);
+    }
+
+    @ResponseBody
     @GetMapping(value = "**/consultaVendaDinamica/{valor}/{tipoconsulta}")
     public ResponseEntity<List<VendaCompraLojaDto>> consultaVendaDinamica(@PathVariable("valor") String valor, @PathVariable("tipoconsulta") String tipoconsulta) throws ExceptionMentoriaJava {
 
@@ -128,6 +155,7 @@ public class VendaCompraLojaVirtController {
             vendaCompraLoja = vendaCompraLojaVirtRepository.vendaPorEnderecoEntrega(valor.toUpperCase().trim());
         }
 
+        assert vendaCompraLoja != null;
         return getListResponseEntity(vendaCompraLoja);
     }
 
