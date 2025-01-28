@@ -2,7 +2,9 @@ package jd.dev.controller;
 
 import jd.dev.ExceptionMentoriaJava;
 import jd.dev.model.NotaFiscalCompra;
+import jd.dev.model.NotaFiscalVenda;
 import jd.dev.repository.NotaFiscalCompraRepository;
+import jd.dev.repository.NotaFiscaldeVendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ public class NotaFiscalCompraController {
 
     @Autowired
     private NotaFiscalCompraRepository notaFiscalCompraRepository;
+    @Autowired
+    private NotaFiscaldeVendaRepository notaFiscaldeVendaRepository;
 
 
 
@@ -82,6 +86,19 @@ public class NotaFiscalCompraController {
         }
 
         return new ResponseEntity<NotaFiscalCompra>(notaFiscalCompra, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "**/obterNotaFiscaVenda/{idVenda}")
+    public ResponseEntity<NotaFiscalVenda> obterNotaFiscaVenda(@PathVariable("idVenda") Long idVenda) throws ExceptionMentoriaJava {
+
+        NotaFiscalVenda notaFiscalVenda = notaFiscaldeVendaRepository.buscaNotaPorvenda(idVenda);
+
+        if (notaFiscalVenda == null) {
+            throw new ExceptionMentoriaJava("Não encontrou Nota Fiscal com código: " + idVenda);
+        }
+
+        return new ResponseEntity<NotaFiscalVenda>(notaFiscalVenda, HttpStatus.OK);
     }
 
 

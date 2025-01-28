@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class FormadePagamentoController {
@@ -25,6 +26,13 @@ public class FormadePagamentoController {
     public ResponseEntity<?> salvarFormaPagamento (@RequestBody @Valid Long id) {
       formadePagamentoRepository.deleteById(id);
         return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "**/listarFormaDePagamento")
+    public ResponseEntity<List<FormaPagamento>> listarFormaDePagamento () {
+        List<FormaPagamento> formaPagamentos = formadePagamentoRepository.findAll();
+        return new ResponseEntity<List<FormaPagamento>>(formaPagamentos, HttpStatus.OK);
     }
 
 }
